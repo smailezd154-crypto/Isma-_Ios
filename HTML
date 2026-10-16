@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Установка iOS приложений</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #007aff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #007aff;
+    }
+    .app-list {
+      list-style: none;
+      padding: 0;
+    }
+    .app-list li {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-info {
+      display: flex;
+      align-items: center;
+    }
+    .app-info img {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      margin-right: 1rem;
+      object-fit: cover;
+    }
+    button.install-btn {
+      background: #007aff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button.install-btn:hover {
+      background: #005bb5;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #eee;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .instructions {
+      background: #e8f0ff;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    nav {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #007aff;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Установка iOS приложений</h1>
+  <nav>
+    <a href="#" onclick="showSection('home')">Главная</a>
+    <a href="#" onclick="showSection('instructions')">Инструкция</a>
+    <a href="#" onclick="showSection('contacts')">Контакты</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="home">
+    <h2>Популярные приложения</h2>
+    <ul class="app-list">
+      <li>
+        <div class="app-info">
+          <img src="https://via.placeholder.com/60x60.png?text=App1" alt="App 1" />
+          <div>
+            <strong>Приложение 1</strong><br />
+            Описание приложения 1: полезная утилита для iOS.
+          </div>
+        </div>
+        <button class="install-btn" onclick="installApp('https://example.com/app1.plist')">Установить</button>
+      </li>
+      <li>
+        <div class="app-info">
+          <img src="https://via.placeholder.com/60x60.png?text=App2" alt="App 2" />
+          <div>
+            <strong>Приложение 2</strong><br />
+            Описание приложения 2: игра или сервис для iPhone.
+          </div>
+        </div>
+        <button class="install-btn" onclick="installApp('https://example.com/app2.plist')">Установить</button>
+      </li>
+    </ul>
+  </section>
+
+  <section id="instructions" style="display:none;">
+    <h2>Как установить приложение на iOS</h2>
+    <div class="instructions">
+      <ol>
+        <li>На iPhone откройте этот сайт в Safari.</li>
+        <li>Нажмите кнопку "Установить" рядом с нужным приложением.</li>
+        <li>После подтверждения установки перейдите в Настройки → Основные → Профили и доверьтесь разработчику.</li>
+        <li>Теперь приложение можно запускать из меню iPhone.</li>
+      </ol>
+      <p><strong>Важно:</strong> для установки приложений из непроверенных источников соблюдайте осторожность и проверяйте надежность источника.</p>
+    </div>
+  </section>
+
+  <section id="contacts" style="display:none;">
+    <h2>Свяжитесь с нами</h2>
+    <form onsubmit="return sendMessage(event)">
+      <label for="name">Ваше имя:</label><br />
+      <input type="text" id="name" name="name" required style="width:100%; margin-bottom:1rem;" /><br />
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" required style="width:100%; margin-bottom:1rem;" /><br />
+      <label for="message">Сообщение:</label><br />
+      <textarea id="message" name="message" rows="4" required style="width:100%; margin-bottom:1rem;"></textarea><br />
+      <button type="submit" class="install-btn">Отправить</button>
+    </form>
+    <div id="formResult" style="margin-top:1rem;"></div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Установка iOS приложений. Все права защищены.
+</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('main > section').forEach(section => {
+      section.style.display = section.id === id ? 'block' : 'none';
+    });
+  }
+
+  function installApp(plistUrl) {
+    // Ссылка для установки через itms-services (для iOS)
+    const itmsLink = `itms-services://?action=download-manifest&url=${encodeURIComponent(plistUrl)}`;
+    window.location.href = itmsLink;
+  }
+
+  function sendMessage(event) {
+    event.preventDefault();
+    const name = event.target.name.value.trim();
+    const email = event.target.email.value.trim();
+    const message = event.target.message.value.trim();
+
+    if (!name || !email || !message) {
+      alert('Пожалуйста, заполните все поля');
+      return false;
+    }
+
+    // Просто имитация отправки (можно подключить бэкенд для реальной обработки)
+    document.getElementById('formResult').innerText = 'Спасибо за сообщение, мы свяжемся с вами!';
+    event.target.reset();
+    return false;
+  }
+</script>
+
+</body>
+</html>
