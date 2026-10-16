@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Установка iOS приложений</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #007aff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #007aff;
+    }
+    nav {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    nav button {
+      background: #007aff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0 0.3rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    nav button:hover {
+      background: #005bb5;
+    }
+    .app-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .app-item {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      width: 200px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 6px rgba(0,0,0,0.05);
+      background: #fafafa;
+    }
+    .app-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+    .install-button {
+      background: #34c759;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .install-button:hover {
+      background: #269b42;
+    }
+    .hidden {
+      display: none;
+    }
+    .instructions, .app-details {
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .instructions ul {
+      padding-left: 1.2rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+      background: #eee;
+      margin-top: 3rem;
+    }
+    a {
+      color: #007aff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Установка iOS приложений</h1>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Главная</button>
+  <button onclick="showSection('instructions')">Инструкция</button>
+  <button onclick="showSection('contact')">Контакты</button>
+</nav>
+
+<main>
+  <section id="home-section">
+    <h2>Популярные приложения</h2>
+    <ul class="app-list" id="app-list">
+      <!-- Приложения будут добавлены через JS -->
+    </ul>
+  </section>
+
+  <section id="app-details-section" class="hidden">
+    <button onclick="showSection('home')" style="margin-bottom:1rem;">← Вернуться</button>
+    <div class="app-details" id="app-details">
+      <!-- Подробности приложения -->
+    </div>
+  </section>
+
+  <section id="instructions-section" class="hidden">
+    <h2>Как установить приложение на iOS</h2>
+    <div class="instructions">
+      <p>Для установки приложений с нашего сайта выполните следующие шаги:</p>
+      <ul>
+        <li>1. Нажмите кнопку «Установить» рядом с нужным приложением.</li>
+        <li>2. Вам будет предложено установить профиль — согласитесь.</li>
+        <li>3. После установки профиля перейдите в «Настройки» → «Основные» → «Профили» и доверьтесь разработчику.</li>
+        <li>4. Теперь приложение можно запускать с вашего iPhone.</li>
+      </ul>
+      <p>Если возникнут ошибки при установке, попробуйте перезагрузить устройство или обратитесь в поддержку.</p>
+    </div>
+  </section>
+
+  <section id="contact-section" class="hidden">
+    <h2>Контакты и поддержка</h2>
+    <p>Если у вас есть вопросы, напишите нам:</p>
+    <form onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.'); this.reset();">
+      <label>
+        Ваше имя:<br />
+        <input type="text" required style="width:100%;padding:0.5rem;margin:0.5rem 0;" />
+      </label><br />
+      <label>
+        Email:<br />
+        <input type="email" required style="width:100%;padding:0.5rem;margin:0.5rem 0;" />
+      </label><br />
+      <label>
+        Сообщение:<br />
+        <textarea required style="width:100%;height:100px;padding:0.5rem;margin:0.5rem 0;"></textarea>
+      </label><br />
+      <button type="submit" style="padding:0.5rem 1rem;background:#007aff;color:white;border:none;border-radius:5px;cursor:pointer;">Отправить</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Установка iOS приложений. Все права защищены.</p>
+</footer>
+
+<script>
+  const apps = [
+    {
+      id: 'app1',
+      name: 'Пример Приложения 1',
+      description: 'Это пример приложения для iOS.',
+      icon: 'https://via.placeholder.com/100?text=App1',
+      details: 'Подробное описание Примера Приложения 1. Здесь вы можете добавить скриншоты и инструкции.',
+      installLink: 'itms-services://?action=download-manifest&url=https://example.com/app1/manifest.plist'
+    },
+    {
+      id: 'app2',
+      name: 'Пример Приложения 2',
+      description: 'Ещё одно крутое приложение для iPhone.',
+      icon: 'https://via.placeholder.com/100?text=App2',
+      details: 'Подробное описание Примера Приложения 2 с дополнительной информацией и советами.',
+      installLink: 'itms-services://?action=download-manifest&url=https://example.com/app2/manifest.plist'
+    }
+  ];
+
+  const appListEl = document.getElementById('app-list');
+  const appDetailsSection = document.getElementById('app-details-section');
+  const appDetailsEl = document.getElementById('app-details');
+  const homeSection = document.getElementById('home-section');
+  const instructionsSection = document.getElementById('instructions-section');
+  const contactSection = document.getElementById('contact-section');
+
+  function createAppItem(app) {
+    const li = document.createElement('li');
+    li.className = 'app-item';
+
+    li.innerHTML = `
+      <img src="${app.icon}" alt="${app.name}" />
+      <h3>${app.name}</h3>
+      <p>${app.description}</p>
+      <button class="install-button" onclick="installApp('${app.installLink}')">Установить</button>
+      <button style="margin-top:5px; background:#007aff; color:white; border:none; padding:0.3rem 0.6rem; border-radius:5px; cursor:pointer;" onclick="showAppDetails('${app.id}')">Подробнее</button>
+    `;
+    return li;
+  }
+
+  function renderAppList() {
+    appListEl.innerHTML = '';
+    apps.forEach(app => {
+      appListEl.appendChild(createAppItem(app));
+    });
+  }
+
+  function installApp(link) {
+    // Перенаправление на установку
+    window.location.href = link;
+  }
+
+  function showAppDetails(appId) {
+    const app = apps.find(a => a.id === appId);
+    if (!app) return;
+    appDetailsEl.innerHTML = `
+      <h2>${app.name}</h2>
+      <img src="${app.icon}" alt="${app.name}" style="width:150px; height:150px; object-fit:contain; margin-bottom:1rem;" />
+      <p>${app.details}</p>
+      <button class="install-button" onclick="installApp('${app.installLink}')">Установить</button>
+    `;
+    showSection('app-details');
+  }
+
+  function showSection(name){
+    homeSection.classList.add('hidden');
+    instructionsSection.classList.add('hidden');
+    contactSection.classList.add('hidden');
+    appDetailsSection.classList.add('hidden');
+
+    switch(name) {
+      case 'home': homeSection.classList.remove('hidden'); break;
+      case 'instructions': instructionsSection.classList.remove('hidden'); break;
+      case 'contact': contactSection.classList.remove('hidden'); break;
+      case 'app-details': appDetailsSection.classList.remove('hidden'); break;
+    }
+  }
+
+  renderAppList();
+</script>
+
+</body>
+</html>
